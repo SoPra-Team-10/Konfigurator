@@ -128,54 +128,12 @@
 </template>
 
 <script>
-var Ajv = require('ajv');
-var ajv = new Ajv();
+
 
 export default {
     data() {
         return {
-            matchConfig: this.configs.matchConfigs[this.state.index],
-            matchConfigSchema = {
-  "maxRounds": "(int/maxRounds)",
-  "timings": {
-    "teamFormationTimeout": "(int/millisec)",
-    "playerTurnTimeout": "(int/millisec)",
-    "fanTurnTimeout": "(int/millisec)",
-    "minPlayerPhaseAnimationDuration": "(int/millisec)",
-    "minFanPhaseAnimationDuration": "(int/millisec)",
-    "minBallPhaseAnimationDuration": "(int/millisec)"
-  },
-  "probabilities": {
-    "throwSuccess": "(float/prob)",
-    "knockOut": "(float/prob)",
-    "foolAway": "(float/prob)",
-    "catchSnitch": "(float/prob)",
-    "catchQuaffle": "(float/prob)",
-    "wrestQuaffle": "(float/prob)",
-    "extraMove": {
-      "tinderblast": "(float/prob)",
-      "cleansweep11": "(float/prob)",
-      "comet260": "(float/prob)",
-      "nimbus2001": "(float/prob)",
-      "firebolt": "(float/prob)"
-    },
-    "foulDetection": {
-      "flacking": "(float/prob)",
-      "haversacking": "(float/prob)",
-      "stooging": "(float/prob)",
-      "blatching": "(float/prob)",
-      "snitchnip": "(float/prob)"
-    },
-    "fanFoulDetection": {
-      "elfTeleportation": "(float/prob)",
-      "goblinShock": "(float/prob)",
-      "trollRoar": "(float/prob)",
-      "snitchSnatch": "(float/prob)"
-    }
-  }
-}
-
-            
+            matchConfig: this.configs.matchConfigs[this.state.index],   
         }
     },
     methods: {
@@ -202,7 +160,6 @@ export default {
             }
         },
         checkInput(event, item, key) {
-            console.log('Hi');
             const max = event.target.max;
             const min = event.target.min;
             let val = item[key];

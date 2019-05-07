@@ -28,11 +28,73 @@
 </template>
 
 <script>
+var Ajv = require('ajv');
+var ajv = new Ajv();
+
 export default {
     props: ['configs', 'state'],
     data() {
         return {
-            selectedItem: 0
+            test: {
+                "properties": {
+                    "test": {"type": "string"}
+                }
+            },
+            testvar: {test: "Hi"},
+            selectedItem: 0,
+            validate: undefined,
+            matchConfigSchema: {
+                "properties": {
+                    "maxRounds": {"type": "number"},
+                    "timings": {
+                        "properties": {
+                            "teamFormationTimeout": {"type": "number"},
+                            "playerTurnTimeout": {"type": "number"},
+                            "fanTurnTimeout": {"type": "number"},
+                            "minPlayerPhaseAnimationDuration": {"type": "number"},
+                            "minFanPhaseAnimationDuration": {"type": "number"},
+                            "minBallPhaseAnimationDuration": {"type": "number"}
+                        }
+                        
+                    },
+                    "probabilities": {
+                        "properties": {
+                            "throwSuccess": {"type": "number"},
+                            "knockOut": {"type": "number"},
+                            "foolAway": {"type": "number"},
+                            "catchSnitch": {"type": "number"},
+                            "catchQuaffle": {"type": "number"},
+                            "wrestQuaffle": {"type": "number"},
+                            "extraMove": {
+                                "properties": {
+                                    "tinderblast": {"type": "number"},
+                                    "cleansweep11": {"type": "number"},
+                                    "comet260": {"type": "number"},
+                                    "nimbus2001": {"type": "number"},
+                                    "firebolt": {"type": "number"}
+                                }
+                            },
+                            "foulDetection": {
+                                "properties": {
+                                    "flacking": {"type": "number"},
+                                    "haversacking": {"type": "number"},
+                                    "stooging": {"type": "number"},
+                                    "blatching": {"type": "number"},
+                                    "snitchnip": {"type": "number"}
+                                }
+                            },
+                            "fanFoulDetection": {
+                                "properties": {
+                                    "elfTeleportation": {"type": "number"},
+                                    "goblinShock": {"type": "number"},
+                                    "trollRoar": {"type": "number"},
+                                    "snitchSnatch": {"type": "number"}
+                                }
+                            }               
+                        }           
+                    }
+                }
+            }  
         }   
     },
     methods: {
@@ -57,8 +119,6 @@ export default {
         },
         //Switches to the MatchConfigurator component and loads the selected configuration
         editConfig(index) {
-            console.log(index);
-            console.log(this.configs.matchConfigs[index]);
             this.state.index = index;
             this.state.isNew = false;
             this.state.currentState = 'inMatchConfig';
@@ -68,15 +128,15 @@ export default {
         createMatchConfig() {
             var newConfig = {   
                 maxRounds: 0,
-                timeouts: {
+                timings: {
+                    teamFormationTimeout: 0,
                     playerTurnTimeout: 0,
                     fanTurnTimeout: 0,
-                    playerPhaseTime: 0,
-                    fanPhaseTime: 0,
-                    ballPhaseTime: 0
+                    minPlayerPhaseAnimationDuration: 0,
+                    minFanPhaseAnimationDuration: 0,
+                    minBallPhaseAnimationDuration: 0
                 },
                 probabilities: {
-                    goal: 0.0,
                     throwSuccess: 0.0,
                     knockOut: 0.0,
                     foolAway: 0.0,
@@ -116,14 +176,13 @@ export default {
         },
         storeConfigs() {
             const parsed = JSON.stringify(this.configs);
-            console.log(parsed);
             localStorage.setItem('configs', parsed);
         },
         //Reads a json file on the hard drive and conerts it to a javascript object
         readFile(){
             var files = document.getElementById("file-import").files;
             var file = files[0];
-            var name = file.name;
+            var name = file.name.split('.')[0];
             //Check of the selected file is a single json file
             if(files.length !== 1){
                 alert("Please choose one file only");
@@ -136,22 +195,30 @@ export default {
                 var reader = new FileReader();
                 reader.readAsText(file);
                 var data;
-                var my_vue = this;
+                var vm = this;
                 //The reading process is asynchron
                 reader.onload = function(){
                     data = JSON.parse(reader.result);
-                    console.log(data);
-                    alert(name);
-                    var newEntry = {
-                        name: name,
-                        config: data
-                    };
-                    console.log(newEntry);
-                    my_vue.configs.matchConfigs.unshift(newEntry);
-                    my_vue.storeConfigs();
+                    vm.validate = ajv.compile(vm.matchConfigSchema);
+                    var valid = vm.validate(data);
+                    console.log(valid);
+                    if(valid) {
+                        alert('Valides JSON-Schema');
+                        var newEntry = {
+                            name: name,
+                            config: data
+                        };
+                        vm.configs.matchConfigs.unshift(newEntry);
+                        vm.storeConfigs();
+                    } else {
+                        alert('Kein valides JSON-Schema.');
+                    }   
                 }
             }
         }
+    },
+    mounted() {
+        
     }
 }
     

@@ -28,11 +28,89 @@
 </template>
 
 <script>
+var Ajv = require('ajv');
+var ajv = new Ajv();
+
 export default {
     props: ['configs', 'state'],
     data() {
         return {
-            selectedItem: 0
+            selectedItem: 0,
+            teamConfigSchema: {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string"},
+                    "motto": {"type": "string"},
+                    "colors": {
+                        "properties": {
+                            "primary": {"type": "string"},
+                            "secondary": {"type": "string"}
+                        }
+                    },
+                    "image": {"type": "string"},
+                    "fans": {
+                        "properties": {
+                            "goblins": {"type": "number"},
+                            "trolls": {"type": "number"},
+                            "elves": {"type": "number"},
+                            "nifflers": {"type": "number"}
+                        }
+                    },
+                    "players": {
+                        "properties": {
+                            "seeker": {
+                                "properties": {
+                                    "name": {"type": "string"},
+                                    "broom": {"type": "string"},
+                                    "sex": {"type": "string"}
+                                }
+                            },
+                            "keeper": {
+                                "properties": {
+                                "name": {"type": "string"},
+                                "broom": {"type": "string"},
+                                "sex": {"type": "string"}
+                                }
+                            },
+                            "chaser1": {
+                                "properties": {
+                                    "name": {"type": "string"},
+                                    "broom": {"type": "string"},
+                                    "sex": {"type": "string"}
+                                }
+                            },
+                            "chaser2": {
+                                "properties": {
+                                    "name": {"type": "string"},
+                                    "broom": {"type": "string"},
+                                    "sex": {"type": "string"}
+                                }
+                            },
+                            "chaser3": {
+                                "properties": {
+                                    "name": {"type": "string"},
+                                    "broom": {"type": "string"},
+                                    "sex": {"type": "string"}
+                                }
+                            },
+                            "beater1": {
+                                "properties": {
+                                    "name": {"type": "string"},
+                                    "broom": {"type": "string"},
+                                    "sex": {"type": "string"}
+                                }
+                            },
+                            "beater2": {
+                                "properties": {
+                                    "name": {"type": "string"},
+                                    "broom": {"type": "string"},
+                                    "sex": {"type": "string"}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }   
     },
     methods: {
@@ -135,13 +213,20 @@ export default {
                 var reader = new FileReader();
                 reader.readAsText(file);
                 var data;
-                var my_vue = this;
+                var vm = this;
                 //The reading process is asynchron
                 reader.onload = function(){
                     data = JSON.parse(reader.result);
-
-                    my_vue.configs.teamConfigs.unshift(data);
-                    my_vue.storeConfigs();
+                    vm.validate = ajv.compile(vm.teamConfigSchema);
+                    var valid = vm.validate(data);
+                    console.log(valid);
+                    if(valid) {
+                        alert('Valides JSON-Schema');
+                        vm.configs.teamConfigs.unshift(data);
+                        vm.storeConfigs();
+                    } else {
+                        alert('Kein valides JSON-Schema.');
+                    }  
                 }
             }
         },
@@ -150,7 +235,6 @@ export default {
             const parsed = JSON.stringify(this.configs);
             localStorage.setItem('configs', parsed);
         }
-
     }
 }
     

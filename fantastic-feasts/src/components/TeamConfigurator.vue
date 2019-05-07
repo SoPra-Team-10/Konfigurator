@@ -187,21 +187,16 @@ export default {
             
         },
         validateTeamConfig(config) {
-            console.log(config);
             if(config.name.length === 0) {
-                console.log('Name');
                 return false;
             }
             if(config.motto.length === 0) {
-                console.log('Motto');
                 return false;
             }
             if(config.colors.primary.length === 0) {
-                console.log('primary');
                 return false;
             }
             if(config.colors.secondary.length === 0) {
-                console.log('secondary');
                 return false;
             }
             const fans = config.fans;
@@ -209,19 +204,15 @@ export default {
             for(var key in fans) {
                 fanSum += parseInt(fans[key]);
             }
-            console.log(fanSum);
             if(fanSum !== 7) {
-                console.log('fans');
                 return false;
             }
             const players = config.players;
-            for(var key in players) {
-                if(players[key].name === "") {
-                    console.log('player-name');
+            for(var player_key in players) {
+                if(players[player_key].name === "") {
                     return false;
                 }
-                if(players[key].broom === "") {
-                    console.log('player-broom');
+                if(players[player_key].broom === "") {
                     return false;
                 }
             }
