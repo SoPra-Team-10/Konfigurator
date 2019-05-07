@@ -3,9 +3,8 @@
             <h3 class="config-submenu-title">Partiekonfigurationen</h3>
             <div class="team-container">
                 <div class="overview-list">
-                    <div v-for="(match, index) in configs.matchConfigs" :key="match.id" :class="{ selected: index ===  selectedItem}" class="overview-list">
-                        <li @click="selectListItem(index)" class="overview-list-item">{{ match.name }}</li>
-                    </div>
+                    <li v-for="(match, index) in configs.matchConfigs" :key="match.id" @click="selectListItem(index)" class="overview-list-item" :class="{ 'selected-list-item': index ===  selectedItem}">{{ match.name }}
+                    </li>
                 </div>
                 <div class="overview-options">
                     <button @click="editConfig(selectedItem)" class="small-button overview-options-button">Bearbeiten</button>

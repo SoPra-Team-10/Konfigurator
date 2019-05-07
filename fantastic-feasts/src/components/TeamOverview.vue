@@ -3,9 +3,8 @@
             <h3 class="config-submenu-title">Teams</h3>
             <div class="team-container">
                 <div class="overview-list">
-                    <div v-for="(team, index) in configs.teamConfigs" :key="team.id" :class="{ selected: index ===  selectedItem}" class="overview-list">
-                        <li @click="selectListItem(index)" class="overview-list-item">{{ team.name }}</li>
-                    </div>
+                    <li v-for="(team, index) in configs.teamConfigs" :key="team.id" @click="selectListItem(index)" class="overview-list-item" :class="{ 'selected-list-item': index ===  selectedItem}">{{ team.name }}
+                    </li>
                 </div>
                 <div class="overview-options">
                     <button @click="editTeamConfig(selectedItem)" class="small-button overview-options-button">Bearbeiten</button>

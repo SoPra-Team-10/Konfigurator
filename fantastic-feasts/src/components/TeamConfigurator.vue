@@ -90,7 +90,7 @@
                     min='1'
                     max='3'
                     class="team-config__fan-counter"
-                    v-model="teamConfig.fans.goblins">
+                    v-model.number="teamConfig.fans.goblins">
                 <label class="team-config__fan-label" for="team-trolls">Trolle</label>
                 <input
                     type="number"
@@ -98,7 +98,7 @@
                     min='1'
                     max='3'
                     class="team-config__fan-counter"
-                    v-model="teamConfig.fans.trolls">
+                    v-model.number="teamConfig.fans.trolls">
                 <label class="team-config__fan-label" for="team-elfs">Elfen</label>
                 <input
                     type="number"
@@ -106,7 +106,7 @@
                     min='1'
                     max='3'
                     class="team-config__fan-counter"
-                    v-model="teamConfig.fans.elfs">
+                    v-model.number="teamConfig.fans.elfs">
                 <label class="team-config__fan-label" for="team-nifflers">Niffler</label>
                 <input
                     type="number"
@@ -114,7 +114,7 @@
                     min='1'
                     max='3'
                     class="team-config__fan-counter"
-                    v-model="teamConfig.fans.nifflers">
+                    v-model.number="teamConfig.fans.nifflers">
                 <div class="main-menu__button-container">
                     <button @click="saveTeamConfig()" class="main-menu__small-button">Speichern</button>
                     <button @click="discardChanges()" class="main-menu__small-button">Verwerfen</button>

@@ -56,7 +56,7 @@ export default {
     position: absolute;
     width: 90%;
     left: 5%;
-    top: 0;
+    top: 4%;
     height: 85%;
 }
 
@@ -213,6 +213,8 @@ export default {
 h4.table-header {
     display: inline-block;
     text-align: center;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
     width: 25%;
 }
 
@@ -278,12 +280,7 @@ h4.table-header {
     border: .5px solid #ebd18a;
 }
 
-.selected {
-    -moz-box-shadow:    inset 0 0 .8vw #00000036;
-    -webkit-box-shadow: inset 0 0 .8vw #00000036;
-    box-shadow:         inset 0 0 .8vw #00000036;
-    
-}
+
 
 
 .overview-options-button {
@@ -296,18 +293,27 @@ h4.table-header {
 .overview-list-item {
     list-style: none;
     text-align: left;
+    padding: .3vw;
+    margin: .1vw;
+    border-radius: .3vw;
 }
 
 .overview-list-item:hover,
 .overview-list-item:focus {
-    background: #e0d9c7;
+    background: #0000001e;
 }
 .overview-list-item.active {
-    background: #d3c9b1;
+    background: #0000001e;
 }
 
-.overview-list li.active {
-    background: #d3c9b1;
+.selected-list-item {
+    background: #0000002f;
+}
+
+.selected {
+    -moz-box-shadow:    inset 0 0 .8vw #00000036;
+    -webkit-box-shadow: inset 0 0 .8vw #00000036;
+    box-shadow:         inset 0 0 .8vw #00000036;
 }
 
 .overview-options {
@@ -319,6 +325,8 @@ h4.table-header {
     vertical-align: top;
     display: inline-block;
     width: 60%;
+    max-height: 30vh;
+    overflow-y: auto;
 }
 
 .overview__general-options {

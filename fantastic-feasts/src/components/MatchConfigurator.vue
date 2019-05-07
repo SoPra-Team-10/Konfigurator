@@ -1,5 +1,5 @@
 <template>
-    <div class="main-content-window-editor">
+    <div class="main-content-window-editor" id="match-config-editor">
             <div id="match-config__left-panel">
                 <div class="match-config__number-panel">
                     <h3>Dateiname</h3>
@@ -11,9 +11,11 @@
                     <input
                         type="number"
                         step="1"
+                        max="1000"
                         min="0"
                         class="match-config__int-counter"
-                        v-model="matchConfig.config.maxRounds">
+                        v-model.number="matchConfig.config.maxRounds"
+                        @blur="checkInput($event, matchConfig.config, 'maxRounds')">
                 </div>
                 <div class="match-config__number-panel">
                     <h3>Zeitbegrenzungen</h3>
@@ -24,7 +26,8 @@
                             step="1"
                             min="0"
                             class="match-config__float-counter"
-                            v-model="matchConfig.config.timeouts[key]">
+                            v-model.number="matchConfig.config.timeouts[key]"
+                            @blur="checkInput($event, matchConfig.config.timeouts, key)">
                     </section>
                 </div>
             </div>
@@ -41,7 +44,8 @@
                                 max="1.00"
                                 min="0.00"
                                 class="match-config__float-counter"
-                                v-model="matchConfig.config.probabilities[key]">
+                                v-model.number="matchConfig.config.probabilities[key]"
+                                @blur="checkInput($event, matchConfig.config.probabilities, key)">
                         </section>    
                     </section>
                 </div>
@@ -56,7 +60,8 @@
                                 max="1.00"
                                 min="0.00"
                                 class="match-config__float-counter"
-                                v-model="matchConfig.config.probabilities.extraMove[key]">
+                                v-model.number="matchConfig.config.probabilities.extraMove[key]"
+                                @blur="checkInput($event, matchConfig.config.probabilities.extraMove, key)">
                         </section>
                     </section>
                 </div>
@@ -71,7 +76,8 @@
                                 max="1.00"
                                 min="0.00"
                                 class="match-config__float-counter"
-                                v-model="matchConfig.config.probabilities.foulDetection[key]">
+                                v-model.number="matchConfig.config.probabilities.foulDetection[key]"
+                                @blur="checkInput($event, matchConfig.config.probabilities.foulDetection, key)">
                         </section>
                     </section>
                 </div>
@@ -86,7 +92,8 @@
                                 max="1.00"
                                 min="0.00"
                                 class="match-config__float-counter"
-                                v-model="matchConfig.config.probabilities.fanFoulDetection[key]">
+                                v-model.number="matchConfig.config.probabilities.fanFoulDetection[key]"
+                                @blur="checkInput($event, matchConfig.config.probabilities.fanFoulDetection, key)">
                         </section>
                     </section>
                 </div>
@@ -126,6 +133,17 @@ export default {
                         this.state.currentState = 'inTeamOverview';
                     }             
                 }
+            }
+        },
+        checkInput(event, item, key) {
+            console.log('Hi');
+            const max = event.target.max;
+            const min = event.target.min;
+            let val = item[key];
+            if(val > max) {
+                item[key] = max;
+            } else if( val < min ) {
+                item[key] = min;
             }
         },
         storeConfigs() {
@@ -170,22 +188,27 @@ export default {
 }
 
 #match-config__left-panel {
-    width: 30%;
+    width: 35%;
     height: 100%;
+    position: relative;
     vertical-align: top;
     display: inline-block;
+}
+
+
+#match-config-editor input {
+    padding: 0.2vh;
+    font-size: 1.5vh;
+    font-family: 'Alice';
 }
 
 #match-config__left-panel > .match-config__number-panel {
     display: inline-block;
     text-align: top;
     vertical-align: top;
-    height: 100%;
     width: 100%;
+
 }
-
-
-
 #match-config__right-panel {
     width: 60%;
     height: 100%;
