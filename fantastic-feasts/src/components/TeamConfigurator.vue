@@ -138,7 +138,8 @@ export default {
                 'thinderblast', 'cleansweep-11', 'comet-260', 'nimbus-2001', 'firebolt'
             ],
             teamConfig: this.configs.teamConfigs[this.state.index],
-            status: ''
+            status: '',
+            alertMessage: ''
         }
     },
     computed: {
@@ -175,13 +176,56 @@ export default {
         },
         //Stores the current Configuration into the browser cache
         saveTeamConfig() {
-            if(this.validateTeamConfig()) {
+            const teamConfig = this.teamConfig;
+            if(this.validateTeamConfig(teamConfig)) {
                 this.storeTeamConfigs();
                 this.state.currentState = 'inTeamOverview';
             } else {
+                alert("Keine gültige Konfiguration.");
                 this.status = 'notValid';
             }
             
+        },
+        validateTeamConfig(config) {
+            console.log(config);
+            if(config.name.length === 0) {
+                console.log('Name');
+                return false;
+            }
+            if(config.motto.length === 0) {
+                console.log('Motto');
+                return false;
+            }
+            if(config.colors.primary.length === 0) {
+                console.log('primary');
+                return false;
+            }
+            if(config.colors.secondary.length === 0) {
+                console.log('secondary');
+                return false;
+            }
+            const fans = config.fans;
+            let fanSum = 0;
+            for(var key in fans) {
+                fanSum += parseInt(fans[key]);
+            }
+            console.log(fanSum);
+            if(fanSum !== 7) {
+                console.log('fans');
+                return false;
+            }
+            const players = config.players;
+            for(var key in players) {
+                if(players[key].name === "") {
+                    console.log('player-name');
+                    return false;
+                }
+                if(players[key].broom === "") {
+                    console.log('player-broom');
+                    return false;
+                }
+            }
+            return true;
         },
         discardChanges() {
             if (this.state.isNew) {
