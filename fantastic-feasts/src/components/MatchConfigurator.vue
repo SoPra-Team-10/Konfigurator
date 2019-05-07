@@ -9,6 +9,8 @@
                         id="match-config__text"
                         v-model="matchConfig.name">
                     <h3>Maximale Rundenzahl</h3>
+                    <!-- Set limits for input values here. @blur-event will call function 
+                    'checkInput'. This will check if user enters number out of range. -->
                     <input
                         type="number"
                         step="1"
@@ -16,35 +18,43 @@
                         min="0"
                         class="match-config__int-counter"
                         v-model.number="matchConfig.config.maxRounds"
+                        :class="{questionable: matchConfig.config.maxRounds < 10}"
                         @blur="checkInput($event, matchConfig.config, 'maxRounds')">
                 </div>
                 <div class="match-config__number-panel">
-                    <h3>Zeitbegrenzungen</h3>
+                    <h3>Zeitbegrenzungen (ms)</h3>
                     <section v-for="(item, key) in matchConfig.config.timeouts" :key="key">
                         <label class="match-config__label" for="">{{ key }}</label>
+                        <!-- Set limits for input values here. @blur-event will call function 
+                        'checkInput'. This will check if user enters number out of range. -->
                         <input
                             type="number"
-                            step="1"
+                            step="100"
+                            max="99999"
                             min="0"
                             class="match-config__float-counter"
+                            :class="{questionable: matchConfig.config.timeouts[key] < 5000}"
                             v-model.number="matchConfig.config.timeouts[key]"
                             @blur="checkInput($event, matchConfig.config.timeouts, key)">
                     </section>
                 </div>
             </div>
             <div id="match-config__right-panel">
-                <h3>Wahrscheinlichkeiten</h3>
+                <h3>Wahrscheinlichkeiten (0,0 ... 1,0)</h3>
                 <div class="match-config__number-panel"> 
                     <h4>Allgemein</h4>
                     <section v-for="(item, key) in matchConfig.config.probabilities" :key="key">
                         <section v-if="key !== 'extraMove' && key !== 'foulDetection' && key !== 'fanFoulDetection'">
                             <label class="match-config__label" for="">{{ key }}</label>
+                            <!-- Set limits for input values here. @blur-event will call function 
+                             'checkInput'. This will check if user enters number out of range. -->
                             <input
                                 type="number"
                                 step="0.01"
                                 max="1.00"
                                 min="0.00"
                                 class="match-config__float-counter"
+                                :class="{questionable: (matchConfig.config.probabilities[key] === 0 || matchConfig.config.probabilities[key] === 1)}"
                                 v-model.number="matchConfig.config.probabilities[key]"
                                 @blur="checkInput($event, matchConfig.config.probabilities, key)">
                         </section>    
@@ -55,12 +65,15 @@
                     <section v-for="(item, key) in matchConfig.config.probabilities.extraMove" :key="key">
                         <section>
                             <label class="match-config__label" for="">{{ key }}</label>
+                            <!-- Set limits for input values here. @blur-event will call function 
+                            'checkInput'. This will check if user enters number out of range. -->
                             <input
                                 type="number"
                                 step="0.01"
                                 max="1.00"
                                 min="0.00"
                                 class="match-config__float-counter"
+                                :class="{questionable: (matchConfig.config.probabilities.extraMove[key] === 0 || matchConfig.config.probabilities.extraMove[key] === 1)}"
                                 v-model.number="matchConfig.config.probabilities.extraMove[key]"
                                 @blur="checkInput($event, matchConfig.config.probabilities.extraMove, key)">
                         </section>
@@ -71,12 +84,15 @@
                     <section v-for="(item, key) in matchConfig.config.probabilities.foulDetection" :key="key">
                         <section>
                             <label class="match-config__label" for="">{{ key }}</label>
+                            <!-- Set limits for input values here. @blur-event will call function 
+                            'checkInput'. This will check if user enters number out of range. -->
                             <input
                                 type="number"
                                 step="0.01"
                                 max="1.00"
                                 min="0.00"
                                 class="match-config__float-counter"
+                                :class="{questionable: (matchConfig.config.probabilities.foulDetection[key] === 0 || matchConfig.config.probabilities.foulDetection[key] === 1)}"
                                 v-model.number="matchConfig.config.probabilities.foulDetection[key]"
                                 @blur="checkInput($event, matchConfig.config.probabilities.foulDetection, key)">
                         </section>
@@ -87,12 +103,15 @@
                     <section v-for="(item, key) in matchConfig.config.probabilities.fanFoulDetection" :key="key">
                         <section v-if="key !== 'extraMove' && key !== 'foulDetection' && key !== 'fanFoulDetection'">
                             <label class="match-config__label" for="">{{ key }}</label>
+                            <!-- Set limits for input values here. @blur-event will call function 
+                            'checkInput'. This will check if user enters number out of range. -->
                             <input
                                 type="number"
                                 step="0.01"
                                 max="1.00"
                                 min="0.00"
                                 class="match-config__float-counter"
+                                :class="{questionable: (matchConfig.config.probabilities.fanFoulDetection[key] === 0 || matchConfig.config.probabilities.fanFoulDetection[key] === 1)}"
                                 v-model.number="matchConfig.config.probabilities.fanFoulDetection[key]"
                                 @blur="checkInput($event, matchConfig.config.probabilities.fanFoulDetection, key)">
                         </section>
@@ -109,10 +128,54 @@
 </template>
 
 <script>
+var Ajv = require('ajv');
+var ajv = new Ajv();
+
 export default {
     data() {
         return {
-            matchConfig: this.configs.matchConfigs[this.state.index]
+            matchConfig: this.configs.matchConfigs[this.state.index],
+            matchConfigSchema = {
+  "maxRounds": "(int/maxRounds)",
+  "timings": {
+    "teamFormationTimeout": "(int/millisec)",
+    "playerTurnTimeout": "(int/millisec)",
+    "fanTurnTimeout": "(int/millisec)",
+    "minPlayerPhaseAnimationDuration": "(int/millisec)",
+    "minFanPhaseAnimationDuration": "(int/millisec)",
+    "minBallPhaseAnimationDuration": "(int/millisec)"
+  },
+  "probabilities": {
+    "throwSuccess": "(float/prob)",
+    "knockOut": "(float/prob)",
+    "foolAway": "(float/prob)",
+    "catchSnitch": "(float/prob)",
+    "catchQuaffle": "(float/prob)",
+    "wrestQuaffle": "(float/prob)",
+    "extraMove": {
+      "tinderblast": "(float/prob)",
+      "cleansweep11": "(float/prob)",
+      "comet260": "(float/prob)",
+      "nimbus2001": "(float/prob)",
+      "firebolt": "(float/prob)"
+    },
+    "foulDetection": {
+      "flacking": "(float/prob)",
+      "haversacking": "(float/prob)",
+      "stooging": "(float/prob)",
+      "blatching": "(float/prob)",
+      "snitchnip": "(float/prob)"
+    },
+    "fanFoulDetection": {
+      "elfTeleportation": "(float/prob)",
+      "goblinShock": "(float/prob)",
+      "trollRoar": "(float/prob)",
+      "snitchSnatch": "(float/prob)"
+    }
+  }
+}
+
+            
         }
     },
     methods: {
@@ -144,9 +207,9 @@ export default {
             const min = event.target.min;
             let val = item[key];
             if(val > max) {
-                item[key] = max;
+                item[key] = parseFloat(max);
             } else if( val < min ) {
-                item[key] = min;
+                item[key] = parseFloat(min);
             }
         },
         storeConfigs() {
@@ -182,7 +245,7 @@ export default {
 
 .match-config__number-panel input {
     display: inline-block;
-    width: 20%;
+    width: 28%;
     vertical-align: top;
 }
 
@@ -199,10 +262,20 @@ export default {
 }
 
 
+
+
 #match-config-editor input {
-    padding: 0.2vh;
+    padding: 0.3vh;
     font-size: 1.5vh;
     font-family: 'Alice';
+    margin: .1vh;
+    border: 1px solid #d6cc9d;
+    border-radius: .4vh;
+    color: #664213;
+}
+
+#match-config-editor .questionable {
+    color: #f1b900;
 }
 
 #match-config__left-panel > .match-config__number-panel {
@@ -224,6 +297,10 @@ export default {
 
 .match-config__float-counter {
     text-align: right !important;
+}
+
+.match-config__int-counter {
+    text-align: right;
 }
 
 </style>
