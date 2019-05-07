@@ -1,5 +1,6 @@
 <template>
     <div class="main-content-window-editor" id="match-config-editor">
+    <!-- Central area that includes all the configuration options -->
             <div id="match-config__left-panel">
                 <div class="match-config__number-panel">
                     <h3>Dateiname</h3>
@@ -98,7 +99,8 @@
                     </section>
                 </div>
             </div>
-        
+
+            <!-- The two buttons on the bottom -->
             <div class="main-menu__button-container">
                 <button @click="saveConfig()" class="main-menu__small-button">Speichern</button>
                 <button @click="discardChanges()" class="main-menu__small-button">Verwerfen</button>
@@ -114,6 +116,7 @@ export default {
         }
     },
     methods: {
+        //Stores the configuration into the browser cache
         saveConfig() {
             this.storeConfigs();
             this.state.currentState = 'inMatchOverview';

@@ -32,6 +32,7 @@ export default {
         }
     },
     methods: {
+        //Translation to German to display the terms in the program
         mapRole(index) {
             switch (index) {
                 case 'seeker':

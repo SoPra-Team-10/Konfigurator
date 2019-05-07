@@ -3,10 +3,12 @@
             <h1 class="subtitle">Konfigurator</h1>
             <div class="main-content-container">
                 <div class="text-content-container">
+                    <!-- Buttons to switch between the team-editor and the match-editor -->
                     <div v-if="state.currentState === 'inTeamOverview' || state.currentState === 'inMatchOverview'" class="button-header-panel">
                         <button @click="state.currentState = 'inTeamOverview'" :class="{ selected: state.currentState === 'inTeamOverview'}" class="config__header-button" id="config__header-button-left">Team</button>
                         <button @click="state.currentState = 'inMatchOverview'" :class="{ selected: state.currentState === 'inMatchOverview'}" class="config__header-button" id="config__header-button-right">Partie</button>
                     </div>
+                    <!-- hands objects over to other components -->
                     <app-team-config v-if="state.currentState === 'inTeamConfig'" :game="game" :state="state" :configs="configs"></app-team-config>
                     <app-match-config v-if="state.currentState === 'inMatchConfig'" :game="game" :state="state" :configs="configs"></app-match-config>
                     <app-team-overview v-if="state.currentState === 'inTeamOverview'" :game="game" :state="state" :configs="configs"></app-team-overview>
@@ -26,6 +28,7 @@ export default {
     data() {
         return {
             state: {
+                //initializes varbiables so that the program starts in team-configuration select mode
                 currentState: 'inTeamOverview',
                 index: 0,
                 isNew: false
@@ -34,6 +37,7 @@ export default {
     },
     props: ['game', 'configs'],
     components: {
+        //allows this component to access imported components
         'app-team-config': TeamConfig,
         'app-match-config': MatchConfig,
         'app-team-overview': TeamOverview,

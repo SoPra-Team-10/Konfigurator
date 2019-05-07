@@ -3,9 +3,11 @@
             <h3 class="config-submenu-title">Teams</h3>
             <div class="team-container">
                 <div class="overview-list">
+                    <!-- List of selectable configurations -->
                     <li v-for="(team, index) in configs.teamConfigs" :key="team.id" @click="selectListItem(index)" class="overview-list-item" :class="{ 'selected-list-item': index ===  selectedItem}">{{ team.name }}
                     </li>
                 </div>
+                <!-- Buttons on the right -->
                 <div class="overview-options">
                     <button @click="editTeamConfig(selectedItem)" class="small-button overview-options-button">Bearbeiten</button>
                     <button @click="downloadJSON()" class="small-button overview-options-button"><a id="downloadAnchorElem" style="display:none"></a>Download</button>
@@ -13,6 +15,7 @@
                 </div>
             </div>
             
+            <!-- Buttons at the bottom -->
             <div class="overview__general-options">
                 <hr class="team-config__content-container-hr">
                 <label for="file-import" class="small-button overview__general-options-button">Importieren</label>
@@ -33,6 +36,7 @@ export default {
         }   
     },
     methods: {
+        //Downloads the json file from the cache, writing it to the hard drive
         downloadJSON() {
             var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.configs.teamConfigs[this.selectedItem]));
             var downloadAnchorNode = document.createElement('a');
@@ -45,16 +49,19 @@ export default {
         selectListItem(index) {
             this.selectedItem = index;
         },
+        //Removes the object from the cache
         deleteTeamConfig(index) {
             this.configs.teamConfigs.splice(index, 1);
             const parsed = JSON.stringify(this.configs);
             localStorage.setItem('configs', parsed);
         },
+        //Opens the TeamConfiguration component and loads the selected configuration
         editTeamConfig(index) {
             this.state.index = index;
             this.state.isNew = false;
             this.state.currentState = 'inTeamConfig';
         },
+        //sets up a new team-configuration object and switches to the TeamConfiguration component
         createTeamConfig() {
             var newConfig = {   
                 name: 'Name',
@@ -113,9 +120,11 @@ export default {
             this.state.isNew = true;
             this.state.currentState = 'inTeamConfig';
         },
+        //Reads a json file on the hard drive and converts it into an javascript object
         readFile(){
             var files = document.getElementById("file-import").files;
             var file = files[0];
+            //check if the selected file is a single json file
             if(files.length !== 1){
                 alert("Please choose one file only");
             }
@@ -127,6 +136,7 @@ export default {
                 reader.readAsText(file);
                 var data;
                 var my_vue = this;
+                //The reading process is asynchron
                 reader.onload = function(){
                     data = JSON.parse(reader.result);
 

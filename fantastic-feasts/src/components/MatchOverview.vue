@@ -3,9 +3,11 @@
             <h3 class="config-submenu-title">Partiekonfigurationen</h3>
             <div class="team-container">
                 <div class="overview-list">
+                    <!-- List of selectable configurations -->
                     <li v-for="(match, index) in configs.matchConfigs" :key="match.id" @click="selectListItem(index)" class="overview-list-item" :class="{ 'selected-list-item': index ===  selectedItem}">{{ match.name }}
                     </li>
                 </div>
+                <!-- The buttons on the right -->
                 <div class="overview-options">
                     <button @click="editConfig(selectedItem)" class="small-button overview-options-button">Bearbeiten</button>
                     <button @click="downloadJSON()" class="small-button overview-options-button"><a id="downloadAnchorElem" style="display:none"></a>Download</button>
@@ -13,6 +15,7 @@
                 </div>
             </div>
             
+            <!-- The buttons at the bottom -->
             <div class="overview__general-options">
                 <hr class="team-config__content-container-hr">
                 <label for="file-import" class="small-button overview__general-options-button">Importieren</label>
@@ -33,6 +36,7 @@ export default {
         }   
     },
     methods: {
+        //Downloads the configuration as a json file, writing it to the hard drive
         downloadJSON() {
             var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.configs.matchConfigs[this.selectedItem].config));
             var downloadAnchorNode = document.createElement('a');
@@ -45,11 +49,13 @@ export default {
         selectListItem(index) {
             this.selectedItem = index;
         },
+        //Removes selected configuration from the cache
         deleteConfig(index) {
             this.configs.matchConfigs.splice(index, 1);
             const parsed = JSON.stringify(this.configs);
             localStorage.setItem('configs', parsed);
         },
+        //Switches to the MatchConfigurator component and loads the selected configuration
         editConfig(index) {
             console.log(index);
             console.log(this.configs.matchConfigs[index]);
@@ -57,6 +63,8 @@ export default {
             this.state.isNew = false;
             this.state.currentState = 'inMatchConfig';
         },
+        //Sets up a new configuration and switches to the MatchConfigurator component. All values are 
+        //initialized with 0.
         createMatchConfig() {
             var newConfig = {   
                 maxRounds: 0,
@@ -111,10 +119,12 @@ export default {
             console.log(parsed);
             localStorage.setItem('configs', parsed);
         },
+        //Reads a json file on the hard drive and conerts it to a javascript object
         readFile(){
             var files = document.getElementById("file-import").files;
             var file = files[0];
             var name = file.name;
+            //Check of the selected file is a single json file
             if(files.length !== 1){
                 alert("Please choose one file only");
             }
@@ -127,6 +137,7 @@ export default {
                 reader.readAsText(file);
                 var data;
                 var my_vue = this;
+                //The reading process is asynchron
                 reader.onload = function(){
                     data = JSON.parse(reader.result);
                     console.log(data);

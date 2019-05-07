@@ -1,4 +1,5 @@
 <template>
+    <!-- The main area that includes the configuration options -->
     <div class="main-content-window-editor" id="team-configurator">
         <!-- <h2>Team Konfigurator</h2> -->
              <h3>Team</h3>
@@ -81,6 +82,7 @@
                     v-model="player.sex"> w
                 </label>
             </div>
+            <!-- The fan options -->
             <h3>Fans (<span :class="[{valid: fanSum == 7},{invalid: fanSum > 7}]">{{ fanSum }}</span> / 7)</h3>
             <div class="fan-selection">
                 <label class="team-config__fan-label" for="team-goblins">Goblins</label>
@@ -116,6 +118,7 @@
                     class="team-config__fan-counter"
                     v-model.number="teamConfig.fans.nifflers">
                 <div class="main-menu__button-container">
+                    <!-- Buttons at the bottom -->
                     <button @click="saveTeamConfig()" class="main-menu__small-button">Speichern</button>
                     <button @click="discardChanges()" class="main-menu__small-button">Verwerfen</button>
                 </div>
@@ -127,6 +130,7 @@
 export default {
     data() {
         return {
+            //define viable options
             playerRoles: [
                 'Sucher', 'Hüter', 'Jäger', 'Jäger', 'Jäger', 'Treiber', 'Treiber'
             ],
@@ -139,6 +143,7 @@ export default {
         }
     },
     computed: {
+        //returns the total number of fans
         fanSum() {
             var sum = 0;
             for(var key in this.teamConfig.fans) {
@@ -148,6 +153,7 @@ export default {
         }
     }, 
     methods: {
+        //Translates role names to German for display
         mapRole(index) {
             switch (index) {
                 case 'seeker':
@@ -168,6 +174,7 @@ export default {
                 return undefined;
             }
         },
+        //Stores the current Configuration into the browser cache
         saveTeamConfig() {
             const teamConfig = this.teamConfig;
             if(this.validateTeamConfig(teamConfig)) {
