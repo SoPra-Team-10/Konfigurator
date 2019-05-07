@@ -130,11 +130,13 @@ export default {
                 var my_vue = this;
                 reader.onload = function(){
                     data = JSON.parse(reader.result);
+
                     my_vue.configs.teamConfigs.unshift(data);
                     my_vue.storeConfigs();
                 }
             }
         },
+        
         storeConfigs() {
             const parsed = JSON.stringify(this.configs);
             localStorage.setItem('configs', parsed);
