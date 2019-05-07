@@ -1,10 +1,9 @@
 <template>
-    <div>
-        <h1 class="subtitle">Konfigurator</h1>
-        <div class="config__main-content">
-            <div class="team-config__content-container">
+        <div>
+            <h1 class="subtitle">Konfigurator</h1>
+            <div class="main-content-container">
                 <div class="text-content-container">
-                    <div v-if="state.currentState === 'inTeamOverview' || state.currentState === 'inMatchOverview'">
+                    <div v-if="state.currentState === 'inTeamOverview' || state.currentState === 'inMatchOverview'" class="button-header-panel">
                         <button @click="state.currentState = 'inTeamOverview'" :class="{ selected: state.currentState === 'inTeamOverview'}" class="config__header-button" id="config__header-button-left">Team</button>
                         <button @click="state.currentState = 'inMatchOverview'" :class="{ selected: state.currentState === 'inMatchOverview'}" class="config__header-button" id="config__header-button-right">Partie</button>
                     </div>
@@ -15,8 +14,6 @@
                 </div>
             </div>
         </div>
-        
-    </div>
 </template>
 
 <script>
@@ -47,17 +44,71 @@ export default {
 
 <style>
 
-.team-config__content-container {
+.main-content-window-overview {
+    position: absolute;
+    width: 90%;
+    left: 5%;
+    top: 10%;
+    height: 85%;
+}
+
+.main-content-window-editor {
+    position: absolute;
+    width: 90%;
+    left: 5%;
+    top: 0;
+    height: 85%;
+}
+
+.main-content-container {
     display: inline-block;
-    width: 100%;
+    position: absolute;
+    width: 80%;
+    height: 70%;
+    left: 10%;
 }
 
 .team-config__content-container h3 {
-    margin: 10px 0;
-
-    
+    margin: 10px 0;    
 }
 
+.button-header-panel {
+    position: absolute;
+    width: 90%;
+    left: 5%;
+    height: 10%;
+}
+
+.text-content-container {
+    background: radial-gradient(#ffffff, #ebd18a);
+    display: inline-block;
+    position: absolute;
+    width: 90%;
+    left: 5%;
+    height: 100%;
+    border-radius: 5px;
+    color: #795a46;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+.page-content {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.small-button {
+    background: #f8f1df;
+    color: #8d6951;
+    font-family: 'Alice';
+    font-size: 1em;
+    border: 1px solid #99735a;
+    border-radius: .5vh;
+}
+
+.small-button:hover {
+    background: #f7e9c6;
+}
 
 .team-config__content-container h4 {
     margin: 5px 0;
@@ -67,33 +118,45 @@ export default {
 }
 
 .config__header-button {
-    background: #f8f1df;
+    background: #f3e7c0;
     padding: 4px;
     color: #8d6951;
     font-family: 'Alice';
-    font-size: 1em;
+    font-size: 2vh;
     border: 1px solid #99735a;
+    position: absolute;
+    height: 60%;
+    top: 40%;
+    width: 10%;
 }
 
 .config__header-button:hover {
-    background: #f7e9c6;
+    background: #faf0d6;
 }
 
 .config__header-button:active {
     background: #fcf2da;
+    -moz-box-shadow:    inset 0 0 .8vw #00000036;
+    -webkit-box-shadow: inset 0 0 .8vw #00000036;
+    box-shadow:         inset 0 0 .8vw #00000036;
 }
 
 .config__header-button:focus {
     background: #f7e9c6;
+    -moz-box-shadow:    inset 0 0 .8vw #00000036;
+    -webkit-box-shadow: inset 0 0 .8vw #00000036;
+    box-shadow:         inset 0 0 .8vw #00000036;
 }
 
 #config__header-button-left {
+    left: 40%;
     border-right: none;
-    border-radius: 3px 0 0 3px;
+    border-radius: .5vh 0 0 .5vh;
 }
 
 #config__header-button-right {
-    border-radius: 0 3px 3px 0;
+    border-radius: 0 .5vh .5vh 0;
+    right: 40%;
 }
 
 .team-config__content-container input {
@@ -134,12 +197,6 @@ export default {
     padding: 0 15px;
 }
 
-.config__main-content {
-    margin-top: 30px;
-    display: block;
-    position: relative;
-}
-
 .team-config__fan-label {
     width: 40px;
     color: #795a46;
@@ -149,12 +206,8 @@ export default {
 }
 
 .team-config__player-selection {
+    width: 100%;
     position: relative;
-}
-
-.team-config__player-selection h4 {
-    width: 25%;
-    margin-block-start: 0;
 }
 
 h4.table-header {
@@ -176,7 +229,7 @@ h4.table-header {
     border: .5px solid #ebd18a;
     color: #795a46;
     text-align: left;
-    width: 80px;
+    width: 10vw;
 }
 
 .team-config__team-motto-input {
@@ -184,14 +237,14 @@ h4.table-header {
     border: .5px solid #ebd18a;
     color: #795a46;
     text-align: left;
-    width: 250px;
+    width: 15vw;
 }
 .team-config__team-color-input {
     border-radius: 3px;
     border: .5px solid #ebd18a;
     color: #795a46;
     text-align: left;
-    width: 50px;
+    width: 60px;
 }
 
 .team-config__player-label {
@@ -199,6 +252,12 @@ h4.table-header {
     text-align: center;
     width: 12.5%;
     display: inline-block;
+}
+
+
+.config-submenu-title {
+    font-size: 3vh;
+
 }
 
 .team-config__player-name-input {
@@ -220,7 +279,72 @@ h4.table-header {
 }
 
 .selected {
-    background: #f3e7c0;
+    -moz-box-shadow:    inset 0 0 .8vw #00000036;
+    -webkit-box-shadow: inset 0 0 .8vw #00000036;
+    box-shadow:         inset 0 0 .8vw #00000036;
+    
+}
+
+
+.overview-options-button {
+    text-align: center;
+    display: auto;
+    width: 60%;
+    margin: 1vh 1vh;
+}
+
+.overview-list-item {
+    list-style: none;
+    text-align: left;
+}
+
+.overview-list-item:hover,
+.overview-list-item:focus {
+    background: #e0d9c7;
+}
+.overview-list-item.active {
+    background: #d3c9b1;
+}
+
+.overview-list li.active {
+    background: #d3c9b1;
+}
+
+.overview-options {
+    display: inline-block;
+    width: 40%;
+}
+
+.overview-list {
+    vertical-align: top;
+    display: inline-block;
+    width: 60%;
+}
+
+.overview__general-options {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 18%;
+}
+
+.overview__general-options-button {
+    display: inline-block;
+    margin: 0 1vw;
+    padding: .5vh 2vh;
+}
+
+label.small-button {
+    height: 3vh;
+    display: inline-block;
+    vertical-align: center;
+    
+}
+
+.overview-options-button {
+    text-align: center;
+    width: 60%;
+    margin: 1vh 1vh;
 }
 
 

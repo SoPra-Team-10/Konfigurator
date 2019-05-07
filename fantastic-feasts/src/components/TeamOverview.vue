@@ -1,32 +1,28 @@
 <template>
-    <section>
-        <!-- <h2>Team Konfigurator</h2> -->
-        <div class="team-config__content-container">
-            <h3>Teams</h3>
+    <div class="main-content-window-overview">
+            <h3 class="config-submenu-title">Teams</h3>
             <div class="team-container">
-                <div class="team-overview__team-list">
-                    <div v-for="(team, index) in configs.teamConfigs" :key="team.id" :class="{ selected: index ===  selectedItem}" class="team-overview__team-preview">
-                        <li @click="selectListItem(index)" class="team-overview__team-preview-item">{{ team.name }}</li>
+                <div class="overview-list">
+                    <div v-for="(team, index) in configs.teamConfigs" :key="team.id" :class="{ selected: index ===  selectedItem}" class="overview-list">
+                        <li @click="selectListItem(index)" class="overview-list-item">{{ team.name }}</li>
                     </div>
                 </div>
-                <div class="team-overview__team-options">
-                    <button @click="editTeamConfig(selectedItem)" class="main-menu__small-button team-overview__team-options-button">Bearbeiten</button>
-                    <button @click="downloadJSON()" class="main-menu__small-button team-overview__team-options-button"><a id="downloadAnchorElem" style="display:none"></a>Download</button>
-                    <button @click="deleteTeamConfig(selectedItem)" class="main-menu__small-button team-overview__team-options-button">Löschen</button>
+                <div class="overview-options">
+                    <button @click="editTeamConfig(selectedItem)" class="small-button overview-options-button">Bearbeiten</button>
+                    <button @click="downloadJSON()" class="small-button overview-options-button"><a id="downloadAnchorElem" style="display:none"></a>Download</button>
+                    <button @click="deleteTeamConfig(selectedItem)" class="small-button overview-options-button">Löschen</button>
                 </div>
             </div>
             
-            <hr class="team-config__content-container-hr">
-            <div class="team-overview__general-options">
-                <label for="file-import" class="main-menu__small-button team-overview__general-options-button">Importieren</label>
-                <!-- <button @click="readFile()" class="main-menu__small-button team-overview__general-options-button">Importieren</button>
+            <div class="overview__general-options">
+                <hr class="team-config__content-container-hr">
+                <label for="file-import" class="small-button overview__general-options-button">Importieren</label>
+                <!-- <button @click="readFile()" class="small-button team-overview__general-options-button">Importieren</button>
                 <input type="file" id="importChooser" @change="readFile()"/> -->
                 <input type="file" id="file-import" @change="readFile()"/>
-                <button @click="createTeamConfig()" class="main-menu__small-button team-overview__general-options-button">Team erstellen</button>
+                <button @click="createTeamConfig()" class="small-button overview__general-options-button">Team erstellen</button>
             </div>
-            
-        </div>
-    </section>
+    </div>
 </template>
 
 <script>
@@ -150,21 +146,10 @@ export default {
 </script>
 
 <style>
-.team-overview__team-preview-item {
-    list-style: none;
-    text-align: left;
-}
+
 
 #file-import {
     display: none;
-}
-
-label.main-menu__small-button {
-    height: 24px;
-    display: inline-block;
-    vertical-align: center;
-    text-align: bottom; 
-    padding: 1px 5px 3px 5px;
 }
 
 .selected {
@@ -175,40 +160,6 @@ label.main-menu__small-button {
     display: none;
 }
 
-.team-overview__team-preview-item:hover,
-.team-overview__team-preview-item:focus {
-    background: #e0d9c7;
-}
-.team-overview__team-preview-item.active {
-    background: #d3c9b1;
-}
-
-.team-overview__team-preview li.active {
-    background: #d3c9b1;
-}
-
-.team-overview__team-options {
-    display: inline-block;
-    width: 40%;
-}
-
-.team-overview__team-list {
-    vertical-align: top;
-    display: inline-block;
-    width: 60%;
-}
-
-.team-overview__general-options-button {
-    display: inline-block;
-    margin: 0 10px;
-}
-
-.team-overview__team-options-button {
-    text-align: center;
-    display: auto;
-    width: 60%;
-    margin: 10px 10px;
-}
 
 .team-container {
     display: block;

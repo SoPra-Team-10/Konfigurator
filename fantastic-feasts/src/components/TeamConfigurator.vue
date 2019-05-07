@@ -1,29 +1,33 @@
 <template>
-    <section>
+    <div class="main-content-window-editor" id="team-configurator">
         <!-- <h2>Team Konfigurator</h2> -->
              <h3>Team</h3>
             <label class="team-config__team-label" for="team-name">Name</label>
             <input
                 type="text"
                 id="team-name"
+                maxlength="40"
                 class="team-config__team-name-input"
                 v-model.lazy="teamConfig.name">
             <label class="team-config__team-label" for="team-motto">Motto</label>
             <input
                 type="text"
                 id="team-motto"
+                maxlength="80"
                 class="team-config__team-motto-input"
                 v-model.lazy="teamConfig.motto">
             <label class="team-config__team-label" for="team-color-primary">Hauptfarbe</label>
             <input
                 type="text"
                 id="team-color-primary"
+                maxlength="6"
                 class="team-config__team-color-input"
                 v-model.lazy="teamConfig.colors.primary">
             <label class="team-config__team-label" for="team-color-secondary">Zweitfarbe</label>
             <input
                 type="text"
                 id="team-color-secondary"
+                maxlength="6"
                 class="team-config__team-color-input"
                 v-model.lazy="teamConfig.colors.secondary">
             <h3>Spieler</h3>
@@ -32,7 +36,7 @@
             <h4 class="table-header">Besen</h4>
             <h4 class="table-header">Geschlecht</h4>
             <div v-for="(player, index) in teamConfig.players" :key="index +player.sex+player.broom" class="team-config__player-selection">
-                <h4>{{ mapRole(index) }}</h4>
+                <h4 class="player-type-label">{{ mapRole(index) }}</h4>
                 <!-- <label 
                     for="player-name"
                     class="team-config__player-label"
@@ -40,6 +44,7 @@
                 <div class="team-config__input-wrapping">
                     <input
                     type="text"
+                    maxlength="30"
                     id="player-name"
                     class="team-config__player-name-input"
                     v-model.lazy="player.name">
@@ -54,7 +59,7 @@
                         id="player-broom"
                         class="team-config__player-broom-input"
                         v-model="player.broom">
-                    <option v-for="broom in brooms" :selected="broom == 'thinderblast'" :key="broom.id">{{ broom }}</option>
+                    <option v-for="broom in brooms" :selected="broom === 'thinderblast'" :key="broom.id">{{ broom }}</option>
                 </select>
                 </div> 
                 <label 
@@ -115,7 +120,7 @@
                     <button @click="discardChanges()" class="main-menu__small-button">Verwerfen</button>
                 </div>
             </div>
-    </section>
+    </div>
 </template>
 
 <script>
@@ -128,7 +133,8 @@ export default {
             brooms: [
                 'thinderblast', 'cleansweep-11', 'comet-260', 'nimbus-2001', 'firebolt'
             ],
-            teamConfig: this.configs.teamConfigs[this.state.index]
+            teamConfig: this.configs.teamConfigs[this.state.index],
+            status: ''
         }
     },
     computed: {
@@ -162,8 +168,13 @@ export default {
             }
         },
         saveTeamConfig() {
-            this.storeTeamConfigs();
-            this.state.currentState = 'inTeamOverview';
+            if(this.validateTeamConfig()) {
+                this.storeTeamConfigs();
+                this.state.currentState = 'inTeamOverview';
+            } else {
+                this.status = 'notValid';
+            }
+            
         },
         discardChanges() {
             if (this.state.isNew) {
@@ -199,12 +210,30 @@ export default {
     padding: 0;
 }
 
+#team-configurator input {
+    padding: 0.5vh;
+    font-size: 1.5vh;
+    font-family: 'Alice';
+}
+
+#team-configurator option {
+    padding: 0.5vh;
+    font-size: 1.4vh;
+    font-family: 'Alice';
+}
+
 .valid {
     color: #54bd62;
 }
 
 .invalid {
     color: #b84747;
+}
+
+.player-type-label {
+    display: inline-block;
+    width: 25%;
+    margin-block-start: 0;
 }
 
 

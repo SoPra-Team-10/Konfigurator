@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <div class="main-content-window-editor">
             <div id="match-config__left-panel">
                 <div class="match-config__number-panel">
                     <h3>Dateiname</h3>
@@ -96,7 +96,7 @@
                 <button @click="saveConfig()" class="main-menu__small-button">Speichern</button>
                 <button @click="discardChanges()" class="main-menu__small-button">Verwerfen</button>
             </div>
-    </section>
+    </div>
 </template>
 
 <script>

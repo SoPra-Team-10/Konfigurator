@@ -1,13 +1,8 @@
 <template>
-  <div>
-    <app-config class="menu" :class="[game.colorSchemes[game.selectedColorScheme]]" v-if="game.currentState === 'inConfig'" :game="game" :configs="configs" :web="web"></app-config>
-    <app-game v-if="game.currentState === 'inGame'" :game="game" :teamConfig="configs.teamConfigs[configs.selectedTeam]"></app-game>
-
-  </div>
+    <app-config class="menu" :class="[game.colorSchemes[game.selectedColorScheme]]" v-if="game.currentState === 'inConfig'" :game="game" :configs="configs"></app-config>
 </template>
 
 <script>
-import Game from './components/Game.vue';
 
 import Config from './components/Configurator.vue';
 
@@ -18,7 +13,7 @@ export default {
       game: {
         currentState: 'inConfig',
         colorSchemes: ['griffindor-color-scheme', 'slytherin-color-scheme', 'hufflepuff-color-scheme', 'ravenclaw-color-scheme'],
-        selectedColorScheme: 1,
+        selectedColorScheme: 0,
         userName: ""
       },
       
@@ -30,8 +25,6 @@ export default {
     }
   },
   components: {
-    'app-game': Game,
-    
     'app-config': Config
   },
   mounted() {
@@ -49,7 +42,6 @@ export default {
 
 <style>
 
-
   html {
     margin: 0;
   }
@@ -63,13 +55,11 @@ export default {
     box-sizing: border-box;
   }
 
-
   .menu {
     position: fixed;
     width: 100%;
     height: 100%;
     text-align: center;
-
   }
 
   .griffindor-color-scheme {
@@ -109,14 +99,12 @@ export default {
     width: 18vw;
     height: 4vh;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-
   }
 
   .main-menu__button:hover {
     box-shadow: 0 0 10px 0 rgba(255, 228, 110, 0.534);
     color: #f8c22d;
   }
-
   .main-menu__button:focus {
     background: #5f361a;
     box-shadow: 0 0 10px 0 rgba(255, 228, 110, 0.534);
@@ -146,16 +134,7 @@ export default {
     text-shadow: 1px 1px 2px #1b1b1ba6;
   }
 
-  .text-content-container {
-    background: radial-gradient(#ffffff, #ebd18a);
-    display: inline-block;
-    width: 80%;
-    max-width: 1000px;
-    border-radius: 5px;
-    color: #795a46;
-    padding: 30px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
+  
 
   .menu__input {
     margin: 10px;
@@ -190,7 +169,7 @@ export default {
     font-family: 'Alice';
     font-size: 1em;
     border: 1px solid #99735a;
-    border-radius: 3px;
+    border-radius: .5vh;
     margin: 10px 5px 0 5px;
   }
 
