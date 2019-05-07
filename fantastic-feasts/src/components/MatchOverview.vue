@@ -93,7 +93,8 @@ export default {
                             }               
                         }           
                     }
-                }
+                },
+                "required": ["maxRounds", "timings"]
             }  
         }   
     },
@@ -199,7 +200,6 @@ export default {
                 //The reading process is asynchron
                 reader.onload = function(){
                     data = JSON.parse(reader.result);
-                    vm.validate = ajv.compile(vm.matchConfigSchema);
                     var valid = vm.validate(data);
                     console.log(valid);
                     if(valid) {
@@ -218,7 +218,7 @@ export default {
         }
     },
     mounted() {
-        
+        this.validate = ajv.compile(this.matchConfigSchema);
     }
 }
     
