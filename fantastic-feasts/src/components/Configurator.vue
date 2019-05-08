@@ -61,7 +61,7 @@ export default {
     width: 90%;
     left: 5%;
     top: 4%;
-    height: 85%;
+    height: 90%;
 }
 
 .main-content-container {
@@ -69,11 +69,12 @@ export default {
     position: absolute;
     width: 80%;
     height: 70%;
+    min-height: 440px;
     left: 10%;
 }
 
 .team-config__content-container h3 {
-    margin: 10px 0;    
+    margin: 1vh 0;    
 }
 
 .button-header-panel {
@@ -132,6 +133,13 @@ export default {
     height: 60%;
     top: 40%;
     width: 10%;
+}
+
+.main-menu__button-container {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
 }
 
 .config__header-button:hover {
@@ -212,23 +220,24 @@ export default {
 
 .team-config__player-selection {
     width: 100%;
+    height: 4vh;
     position: relative;
 }
 
 h4.table-header {
     display: inline-block;
     text-align: center;
-    margin-top: 1vh;
+    margin-top: 0;
     margin-bottom: 1vh;
     width: 25%;
 }
 
 .team-config__team-label {
-    width: 40px;
+    display: inline-block;
     color: #795a46;
     text-align: left;
     font-weight: bold;
-    margin: 5px;
+    margin: 1vh 1vh;
 }
 
 .team-config__team-name-input {
@@ -244,7 +253,7 @@ h4.table-header {
     border: .5px solid #ebd18a;
     color: #795a46;
     text-align: left;
-    width: 15vw;
+    width: 35vw;
 }
 .team-config__team-color-input {
     border-radius: 3px;

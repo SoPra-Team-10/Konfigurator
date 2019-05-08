@@ -58,6 +58,7 @@ export default {
                         
                     },
                     "probabilities": {
+                        "required": ["throwSuccess", "knockOut", "foolAway", "catchSnitch", "catchQuaffle", "wrestQuaffle", "extraMove", "foulDetection", "fanFoulDetection"],
                         "properties": {
                             "throwSuccess": {"type": "number"},
                             "knockOut": {"type": "number"},
@@ -72,7 +73,8 @@ export default {
                                     "comet260": {"type": "number"},
                                     "nimbus2001": {"type": "number"},
                                     "firebolt": {"type": "number"}
-                                }
+                                },
+                                "required": ["tinderblast", "cleansweep11", "comet260", "nimbus2001", "firebolt"]
                             },
                             "foulDetection": {
                                 "properties": {
@@ -81,7 +83,8 @@ export default {
                                     "stooging": {"type": "number"},
                                     "blatching": {"type": "number"},
                                     "snitchnip": {"type": "number"}
-                                }
+                                },
+                                "required": ["flacking", "haversacking", "stooging", "blatching", "snitchnip"]
                             },
                             "fanFoulDetection": {
                                 "properties": {
@@ -89,12 +92,13 @@ export default {
                                     "goblinShock": {"type": "number"},
                                     "trollRoar": {"type": "number"},
                                     "snitchSnatch": {"type": "number"}
-                                }
+                                },
+                                "required": ["elfTeleportation", "goblinShock", "trollRoar", "snitchSnatch"]
                             }               
                         }           
                     }
                 },
-                "required": ["maxRounds", "timings"]
+                "required": ["maxRounds", "timings", "probabilites"]
             }  
         }   
     },
@@ -200,8 +204,9 @@ export default {
                 //The reading process is asynchron
                 reader.onload = function(){
                     data = JSON.parse(reader.result);
-                    var valid = vm.validate(data);
-                    console.log(valid);
+                    var valid = true;
+                    // this functionality is not working yet!
+                    // var valid = vm.validate(data);
                     if(valid) {
                         alert('Valides JSON-Schema');
                         var newEntry = {

@@ -45,7 +45,8 @@ export default {
                         "properties": {
                             "primary": {"type": "string"},
                             "secondary": {"type": "string"}
-                        }
+                        },
+                        "required": ["primary", "secondary"]
                     },
                     "image": {"type": "string"},
                     "fans": {
@@ -54,7 +55,8 @@ export default {
                             "trolls": {"type": "number"},
                             "elves": {"type": "number"},
                             "nifflers": {"type": "number"}
-                        }
+                        },
+                        "required": ["goblins", "trolls", "elves", "nifflers"]
                     },
                     "players": {
                         "properties": {
@@ -63,53 +65,62 @@ export default {
                                     "name": {"type": "string"},
                                     "broom": {"type": "string"},
                                     "sex": {"type": "string"}
-                                }
+                                },
+                                "required": ["name", "broom", "sex"]
                             },
                             "keeper": {
                                 "properties": {
                                 "name": {"type": "string"},
                                 "broom": {"type": "string"},
                                 "sex": {"type": "string"}
-                                }
+                                },
+                                "required": ["name", "broom", "sex"]
                             },
                             "chaser1": {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "broom": {"type": "string"},
                                     "sex": {"type": "string"}
-                                }
+                                },
+                                "required": ["name", "broom", "sex"]
                             },
                             "chaser2": {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "broom": {"type": "string"},
                                     "sex": {"type": "string"}
-                                }
+                                },
+                                "required": ["name", "broom", "sex"]
                             },
                             "chaser3": {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "broom": {"type": "string"},
                                     "sex": {"type": "string"}
-                                }
+                                },
+                                "required": ["name", "broom", "sex"]
                             },
                             "beater1": {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "broom": {"type": "string"},
                                     "sex": {"type": "string"}
-                                }
+                                },
+                                "required": ["name", "broom", "sex"]
                             },
                             "beater2": {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "broom": {"type": "string"},
                                     "sex": {"type": "string"}
-                                }
+                                },
+                                "required": ["name", "broom", "sex"]
                             }
-                        }
+                        },
+                        "required": ["seeker", "keeper", "chaser1", "chaser2", "chaser3", "beater1", "beater2"]
                     }
-                }
+                },
+                "required": ["name", "motto", "colors", "fans", "players"]
             }
         }   
     },
@@ -148,46 +159,46 @@ export default {
                     primary: 'e2e2e2',
                     secondary: 'e2e2e2'
                 },
-                image: undefined,
+                image: '',
                 fans: {
-                    goblins: 0,
-                    trolls: 0,
-                    elfs: 0,
-                    nifflers: 0
+                    goblins: 1,
+                    trolls: 1,
+                    elfs: 1,
+                    nifflers: 1
                 },
                 players: {
                     seeker: {
-                        name: 'Name',
+                        name: 'Luna',
                         broom: 'firebolt',
                         sex: 'f'
                     },
                     keeper: {
-                        name: 'Name',
-                        broom: 'firebolt',
+                        name: 'Tom',
+                        broom: 'nimbus-2001',
                         sex: 'm'
                     },
                     chaser1: {
-                        name: 'Name',
-                        broom: 'thinderblast',
+                        name: 'Arthur',
+                        broom: 'comet-260',
                         sex: 'm'
                     },
                     chaser2: {
-                        name: 'Name',
-                        broom: 'thinderblast',
+                        name: 'Rita',
+                        broom: 'cleansweep-11',
                         sex: 'f'
                     },
                     chaser3: {
-                        name: 'Name',
+                        name: 'Fleur',
                         broom: 'firebolt',
                         sex: 'f'
                     },
                     beater1: {
-                        name: 'Name',
+                        name: 'Mafalda',
                         broom: 'thinderblast',
                         sex: 'f'
                     },
                     beater2: {
-                        name: 'Name',
+                        name: 'Phineus',
                         broom: 'thinderblast',
                         sex: 'm'
                     }
@@ -219,7 +230,6 @@ export default {
                     data = JSON.parse(reader.result);
                     vm.validate = ajv.compile(vm.teamConfigSchema);
                     var valid = vm.validate(data);
-                    console.log(valid);
                     if(valid) {
                         alert('Valides JSON-Schema');
                         vm.configs.teamConfigs.unshift(data);
