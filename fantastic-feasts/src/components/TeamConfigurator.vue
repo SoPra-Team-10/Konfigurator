@@ -55,13 +55,15 @@
                     for="player-broom"
                     class="team-config__player-label">
                     Besen</label> -->
-                <div class="team-config__input-wrapping">
+                <div class="team-config__input-wrapping" id="broom-select-wrapper">
                     <select
                         id="player-broom"
                         class="team-config__player-broom-input"
                         v-model="player.broom">
-                    <option v-for="broom in brooms" :selected="broom === 'thinderblast'" :key="broom.id">{{ broom }}</option>
-                </select>
+                        <optgroup class="broom-options">
+                            <option class="broom-options" v-for="broom in brooms" :value="broom" :key="broom.id">{{ mapBroom(broom) }}</option>
+                        </optgroup>
+                    </select>
                 </div> 
                 <label 
                     for="male"
@@ -139,7 +141,8 @@ export default {
             ],
             teamConfig: this.configs.teamConfigs[this.state.index],
             status: '',
-            alertMessage: ''
+            alertMessage: '',
+            preselect: 'thinderblast'
         }
     },
     computed: {
@@ -173,6 +176,22 @@ export default {
                 default: 
                 return undefined;
             }
+        },
+
+        mapBroom(broomType) {
+            switch(broomType) {
+                case 'thinderblast':
+                    return 'Zunderfauch';
+                case 'cleansweep-11':
+                    return 'Sauberwisch 11';
+                case 'comet-260':
+                    return 'Comet-2-60';
+                case 'nimbus-2001':
+                    return 'Nimbus-2001';
+                case 'firebolt':
+                    return 'Feuerblitz';
+                default: undefined
+            }    
         },
         //Stores the current Configuration into the browser cache
         saveTeamConfig() {
@@ -262,6 +281,44 @@ export default {
     padding: 0.5vh;
     font-size: 1.4vh;
     font-family: 'Alice';
+}
+
+#broom-select-wrapper {
+	height: 2.8vh;
+	width: 16vw;
+	background: url(http://i50.tinypic.com/9ldb8j.png) no-repeat right center #00000013;
+    background-size: 10vh;
+    border-radius: .3vh;
+    padding: 0;
+    margin: 0;
+}
+
+#broom-select-wrapper select {
+	font-size: 1.5vh;
+	border-radius: 0;
+	border: none;
+	background: transparent;
+	width: 16vw;
+	overflow: hidden;
+	height: 2.3h;
+    padding-top: .6vh;
+    padding-left: .6vh;
+	color: #795a46;
+	-webkit-appearance: none;
+}
+
+#broom-select-wrapper optgroup {
+    font-size: 1.5vh;
+}
+
+#broom-select-wrapper option.broom-options {
+	font-size: 14px;
+	padding: 5px;
+	background: #5c5c5c;
+}
+
+.broom-options {
+    font-size: 5vh;
 }
 
 .valid {

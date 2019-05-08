@@ -23,7 +23,7 @@
                 </div>
                 <div class="match-config__number-panel">
                     <h3>Zeitbegrenzungen (ms)</h3>
-                    <section v-for="(item, key) in matchConfig.config.timeouts" :key="key">
+                    <section v-for="(item, key) in matchConfig.config.timings" :key="key">
                         <label class="match-config__label" for="">{{ key }}</label>
                         <!-- Set limits for input values here. @blur-event will call function 
                         'checkInput'. This will check if user enters number out of range. -->
@@ -33,9 +33,9 @@
                             max="99999"
                             min="0"
                             class="match-config__float-counter"
-                            :class="{questionable: matchConfig.config.timeouts[key] < 5000}"
-                            v-model.number="matchConfig.config.timeouts[key]"
-                            @blur="checkInput($event, matchConfig.config.timeouts, key)">
+                            :class="{questionable: matchConfig.config.timings[key] < 5000}"
+                            v-model.number="matchConfig.config.timings[key]"
+                            @blur="checkInput($event, matchConfig.config.timings, key)">
                     </section>
                 </div>
             </div>
@@ -195,14 +195,14 @@ export default {
 
 .match-config__number-panel label {
     display: inline-block;
-    width: 60%;
+    width: 70%;
     text-align: left;
     vertical-align: top;
 }
 
 .match-config__number-panel input {
     display: inline-block;
-    width: 28%;
+    width: 23%;
     vertical-align: top;
 }
 
@@ -211,7 +211,7 @@ export default {
 }
 
 #match-config__left-panel {
-    width: 35%;
+    width: 45%;
     height: 100%;
     position: relative;
     vertical-align: top;
@@ -243,7 +243,7 @@ export default {
 
 }
 #match-config__right-panel {
-    width: 60%;
+    width: 55%;
     height: 100%;
     display: inline-block;
 }

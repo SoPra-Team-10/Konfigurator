@@ -128,41 +128,41 @@ export default {
         //initialized with 0.
         createMatchConfig() {
             var newConfig = {   
-                maxRounds: 0,
+                maxRounds: 200,
                 timings: {
-                    teamFormationTimeout: 0,
-                    playerTurnTimeout: 0,
-                    fanTurnTimeout: 0,
-                    minPlayerPhaseAnimationDuration: 0,
-                    minFanPhaseAnimationDuration: 0,
-                    minBallPhaseAnimationDuration: 0
+                    teamFormationTimeout: 30000,
+                    playerTurnTimeout: 20000,
+                    fanTurnTimeout: 20000,
+                    minPlayerPhaseAnimationDuration: 3000,
+                    minFanPhaseAnimationDuration: 3000,
+                    minBallPhaseAnimationDuration: 3000
                 },
                 probabilities: {
-                    throwSuccess: 0.0,
-                    knockOut: 0.0,
-                    foolAway: 0.0,
-                    catchSnitch: 0.0,
-                    catchQuaffle: 0.0,
-                    wrestQuaffle: 0.0,
+                    throwSuccess: 0.5,
+                    knockOut: 0.33,
+                    foolAway: 0.33,
+                    catchSnitch: 0.1,
+                    catchQuaffle: 0.2,
+                    wrestQuaffle: 0.2,
                     extraMove: {
-                        thinderblast: 0.0,
-                        cleansweep11: 0.0,
-                        comet260: 0.0,
-                        nimbus2001: 0.0,
-                        firebolt: 0.0
+                        thinderblast: 0.5,
+                        cleansweep11: 0.4,
+                        comet260: 0.3,
+                        nimbus2001: 0.2,
+                        firebolt: 0.1
                     },
                     foulDetection: {
-                        flacking: 0.0,
-                        haversacking: 0.0,
-                        stooging: 0.0,
-                        blatching: 0.0,
-                        snitchnip: 0.0
+                        flacking: 0.33,
+                        haversacking: 0.33,
+                        stooging: 0.33,
+                        blatching: 0.33,
+                        snitchnip: 0.33
                     },
                     fanFoulDetection: {
-                        elfTeleportation: 0.0,
-                        goblinShock: 0.0,
-                        trollRoar: 0.0,
-                        snitchSnatch: 0.0
+                        elfTeleportation: 0.33,
+                        goblinShock: 0.33,
+                        trollRoar: 0.33,
+                        snitchSnatch: 0.33
                     }
                 }   
             }

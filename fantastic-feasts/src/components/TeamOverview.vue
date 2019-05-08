@@ -158,37 +158,37 @@ export default {
                 players: {
                     seeker: {
                         name: 'Name',
-                        broom: undefined,
+                        broom: 'firebolt',
                         sex: 'f'
                     },
                     keeper: {
                         name: 'Name',
-                        broom: undefined,
+                        broom: 'firebolt',
                         sex: 'm'
                     },
                     chaser1: {
                         name: 'Name',
-                        broom: undefined,
+                        broom: 'thinderblast',
                         sex: 'm'
                     },
                     chaser2: {
                         name: 'Name',
-                        broom: undefined,
+                        broom: 'thinderblast',
                         sex: 'f'
                     },
                     chaser3: {
                         name: 'Name',
-                        broom: undefined,
+                        broom: 'firebolt',
                         sex: 'f'
                     },
                     beater1: {
                         name: 'Name',
-                        broom: undefined,
+                        broom: 'thinderblast',
                         sex: 'f'
                     },
                     beater2: {
                         name: 'Name',
-                        broom: undefined,
+                        broom: 'thinderblast',
                         sex: 'm'
                     }
                 }   

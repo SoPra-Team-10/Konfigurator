@@ -187,7 +187,8 @@ export default {
 }
 
 .team-config__fan-counter {
-    width: 30px;
+    width: 3vw;
+    min-width: 45px;
     border-radius: 3px;
     border: .5px solid #ebd18a;
     color: #795a46;
